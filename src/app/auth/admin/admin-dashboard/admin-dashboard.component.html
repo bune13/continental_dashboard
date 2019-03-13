@@ -1,0 +1,84 @@
+<section class="admin-home-dashboard">
+
+  <div class="container-fluid admin-dashboard-main-line-chart">
+    <div class="row">
+      <div class="col-12">
+        <span>Visitors</span>
+      </div>
+      <div class="col-12 mb-4">
+        <small>Unique visitors by month</small>
+      </div>
+      <div class="col-12">
+        <canvas baseChart height="60px" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [chartType]="lineChartType"
+          [colors]="lineChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-12 mx-auto">
+
+        <div class="row">
+          <!-- ------------Start Analytics Container Field------------ -->
+
+          <!-- ------------handle left major space------------ -->
+          <div class="col-12 col-lg-8">
+            <div class="row">
+
+              <div class="col-12 mb-3">
+                <span class="admin-analytics-titles">How are your active users trending over time?</span>
+              </div>
+
+              <div class="col-12">
+                <div class="row">
+
+                  <div class="col-4">
+                    <div class="on-box left-upper-showcase">
+                      Number of agents
+                    </div>
+                  </div>
+
+                  <div class="col-4">
+                    <div class="on-box left-upper-showcase">
+                      No of live agents
+                    </div>
+                  </div>
+
+                  <div class="col-4">
+                    <div class="on-box left-upper-showcase">
+                      Total Conversation
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ------------handle right minor space------------ -->
+          <div class="col-12 col-lg-4">
+            <div class="row">
+              <div class="col-12 mb-3">
+                <span class="admin-analytics-titles">What are your top devices?</span>
+              </div>
+              <div class="col-12">
+                <div class="on-box donut-chart-right-upper">
+                  <canvas baseChart height="99px" width="80px" [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
+                    (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                  </canvas>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ------------End Analytics Container Field------------ -->
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</section>

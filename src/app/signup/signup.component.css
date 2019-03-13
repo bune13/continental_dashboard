@@ -1,0 +1,34 @@
+.requiredstar {
+  color: red;
+}
+
+input.ng-valid,
+input.ng-valid {
+  border: 1px solid #42A948;
+  /* green */
+}
+
+input.ng-dirty.ng-invalid,
+input.ng-touched.ng-invalid {
+  border: 1px solid red;
+  /* red */
+}
+
+.waiting-feedback{
+  display: none;
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #007bff;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.display-validation {
+  display: block;
+}

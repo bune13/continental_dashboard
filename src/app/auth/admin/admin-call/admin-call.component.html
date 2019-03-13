@@ -1,0 +1,66 @@
+<section class="admin-call-page">
+  <div class="container my-5">
+    <div class="row">
+
+      <div class="col-12 mx-auto">
+
+        <p class="download-text">Please download the template
+          <a [href]="downloadApiLink">file</a>.</p>
+        <!-- <button class="btn btn-primary" type="button" (click)="onDownloadTemplate()http://127.0.0.1:5000/download_template">Download</button> -->
+        <hr>
+
+        <h4>Upload You File</h4>
+        <br>
+        <!-- <input #file type="file" (change)="upload(file.files)" />
+        <hr> -->
+        <input type="file" (change)="onFileSelected($event)" class="form-control" accept=".xlsx, .xls, .csv" />
+        <br>
+        <button class="btn btn-primary" (click)="onUpload()">Upload</button>
+        <br>
+        <progressbar *ngIf="this.showProgressBar" [value]="uploadProgress" type="info" [striped]="true">{{uploadProgressCompleted}}</progressbar>
+
+      </div>
+
+      <div class="col-12" *ngIf="showDatatable">
+        <hr>
+      </div>
+
+      <div class="col-12" *ngIf="showDatatable">
+        <button class="btn btn-dark" (click)="onClickCallToAllUser()">Call All</button>
+      </div>
+
+      <div class="col-12 mt-3" *ngIf="showDatatable"> 
+        <table class="table table-hover" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Sr No.</th>
+              <th>Full Name</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Insurance Name</th>
+              <th>Insurance Date</th>
+              <th>Check Number</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let list of lists; let i = index">
+              <td>{{i+1}}</td>
+              <td>?</td>
+              <td>{{list["Phone number"]["body"]}}</td>
+              <td>?</td>
+              <td>{{list["Insurance name"]["body"]}}</td>
+              <td>{{list["Insurance Date"]}}</td>
+              <td>{{list["Check number"]}}</td>
+              <td>Not Verified</td>
+              <td style="text-align:center;"><i class="fa fa-phone" aria-hidden="true" style="cursor:pointer" (click)="onClickCallToUser(list['Phone number']['body'])"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+  </div>
+</section>

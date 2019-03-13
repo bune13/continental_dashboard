@@ -1,0 +1,28 @@
+.navbar {
+  padding: 0.1rem 1rem;
+}
+
+.navbar-brand {
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+/* Small devices (landscape phones, 544px and up) */
+
+@media (max-width: 544px) {}
+
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.3rem 1rem;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+
+@media (max-width: 992px) {}
+
+/* Extra large devices (large desktops, 1200px and up) */
+
+@media (max-width: 1200px) {}

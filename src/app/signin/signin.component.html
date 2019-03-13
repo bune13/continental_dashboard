@@ -1,0 +1,131 @@
+<section class="signin-container">
+  <div class="header-text-box d-flex justify-content-center ">
+    <div class="col-10 col-md-6 col-lg-4  flip">
+
+
+
+
+      <div class="flip-container " [ngClass]="{'startflip':flip}">
+        <div class="flipper">
+          <div class="front">
+
+            <form [formGroup]="signInForm" class="form-box" (ngSubmit)="onLogin()">
+
+              <!-- ----------------Inputs---------------- -->
+              <div class="row">
+
+                <div class="col-12 mb-4">
+                  <h4>Log into your account</h4>
+                </div>                
+
+                <div class="col-12">
+                  <div class="form-group">
+                    <input type="text" id="username" class="form-control" placeholder="Username" [formControlName]="'username'">
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group">
+                    <input type="text" id="password" class="form-control" placeholder="Password" [formControlName]="'password'">
+                    <div class="small-links d-flex justify-content-end">
+                      <a style="cursor:pointer; text-decoration:underline; color:#007bff" (click)="doFlip()">Forgot Password?</a>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!--------------------Alert------------------------>
+              <div class="errorAlert" *ngIf="apiService.errorAlert">
+                <alert type="danger">
+                  <p>Invalid Username or Password. Please try again</p>
+                </alert>
+              </div>
+
+              <!-- ----------------Buttons---------------- -->
+              <div class="row">
+                <div class="col-12 button">
+                  <button class="btn btn-primary mr-2" type="submit" [disabled]="signInForm.invalid">Login</button>
+                  <!-- <button class="btn btn-danger" type="button" (click)="onReset()">Reset</button> -->
+                </div>
+              </div>              
+
+              <!-- ----------------Singup?---------------- -->
+              <div class="row">
+                <div class="col-12 button mt-4">
+                  <div class="small-links">
+                    <a style="cursor:pointer" routerLink="/signup">Sign Up</a>
+                  </div>
+                </div>
+              </div>
+
+
+            </form>
+
+          </div>
+
+
+          <!-- ------------------RESET PASSWORD-------------------- -->
+
+
+          <div class="back">
+            <form [formGroup]="forgetPassword" class="form-box forget-password" (ngSubmit)="resetPassword()">
+              <div class="close-back" (click)="doFlip()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+
+              </div>
+              <!-- ----------------Inputs---------------- -->
+              <div class="row">
+
+                <div class="col-12 mb-4">
+                  <h4>Reset Your Password</h4>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group">
+                    <input type="email" id="email" class="form-control" placeholder="Email" [formControlName]="'email'">
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- ----------------Buttons---------------- -->
+              <div class="row">
+                <div class="col-12 button">
+                  <button class="btn btn-primary mr-2" type="submit" [disabled]="forgetPassword.invalid">Reset password</button>
+                  <!-- <button class="btn btn-danger" type="button" (click)="onReset()">Reset</button> -->
+                </div>
+              </div>
+              <div class="status" *ngIf="waitText">
+                <alert type="info">
+                  Please wait !!!
+                </alert>
+              </div>
+              <div class="status" *ngIf="resetMailSend">
+                <alert type="success">
+                  We have send you a mail for password reset. kindly check your mail
+                </alert>
+              </div>
+              <div class="status" *ngIf="resetMainNotSent">
+                <alert type="danger">
+                  Sorry. No such Email
+                </alert>
+              </div>
+
+            </form>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+  </div>
+
+
+
+</section>

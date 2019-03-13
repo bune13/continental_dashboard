@@ -1,0 +1,257 @@
+<div class="container my-5">
+  <div class="row">
+
+    <div class="col-12 col-md-10 col-lg-8 mx-auto">
+
+      <div class="col-12">
+        <h1>Register your business</h1>
+      </div>
+
+      <div class="col-12">
+        <p>Please provide all required details to register your business with us</p>
+      </div>
+
+      <hr>
+
+      <div class="col-12 mt-4">
+        <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
+
+          <!-- ----------------Names---------------- -->
+          <div class="row">
+
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="fname">First Name
+                  <span class="requiredstar">*</span>
+                </label>
+                <input type="text" id="fname" class="form-control" placeholder="John" [formControlName]="'first_name'">
+                <div class="valid-feedback" [ngClass]="{'display-validation': regForm.get('first_name').valid}">
+                  <i class="fa fa-user"></i> Looks good!
+                </div>
+                <div class="invalid-feedback" [ngClass]="{'display-validation': regForm.get('first_name').invalid && regForm.get('first_name').touched}">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="lname">Last Name
+                  <span class="requiredstar">*</span>
+                </label>
+                <input type="text" id="lname" class="form-control" placeholder="Doe" [formControlName]="'last_name'">
+                <div class="valid-feedback" [ngClass]="{'display-validation': regForm.get('last_name').valid}">
+                  <i class="fa fa-user"></i> Woah!! Great
+                </div>
+                <div class="invalid-feedback" [ngClass]="{'display-validation': regForm.get('last_name').invalid && regForm.get('last_name').touched}">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ----------------Contact---------------- -->
+          <div class="row">
+
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="phone">Contact Number
+                  <span class="requiredstar">*</span>
+                </label>
+                <input type="number" id="phone" class="form-control" placeholder="+9197692120" [formControlName]="'phone'">
+                <div class="valid-feedback" [ngClass]="{'display-validation': regForm.get('phone').valid}">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback" [ngClass]="{'display-validation': regForm.get('phone').invalid && regForm.get('phone').touched}">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="email">Email
+                  <span class="requiredstar">*</span>
+                </label>
+                <input type="email" id="email" class="form-control" placeholder="johndoe@company.com" [formControlName]="'email'">
+                <div class="valid-feedback" [ngClass]="{'display-validation': regForm.get('email').valid}">
+                  <i class="fa fa-thumbs-o-up"></i> Perfect!
+                </div>
+                <div class="invalid-feedback" [ngClass]="{'display-validation': regForm.get('email').invalid && regForm.get('email').touched && !regForm.get('email').errors.emailIsForbidden}">
+                  This field is required.
+                </div>
+                <div class="waiting-feedback" [ngClass]="{'display-validation': regForm.get('email').pending}">
+                  <i class="fa fa-eye"></i> Checking....
+                </div>
+                <div class="invalid-feedback" [ngClass]="{'display-validation': regForm.get('email').invalid && regForm.get('email').dirty && regForm.get('email').errors.emailIsForbidden}">
+                  <i class="fa fa-exclamation-triangle"></i> Seems like this id is already registered. Try different id or sign in again
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ----------------Business Name---------------- -->
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="bname">Business Name
+                  <span class="requiredstar">*</span>
+                </label>
+                <input type="text" id="bname" class="form-control" placeholder="johndoe company" [formControlName]="'business_name'">
+                <div class="valid-feedback" [ngClass]="{'display-validation': regForm.get('business_name').valid}">
+                  Great!
+                </div>
+                <div class="invalid-feedback" [ngClass]="{'display-validation': regForm.get('business_name').invalid && regForm.get('business_name').touched}">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ----------------Business Type---------------- -->
+          <div class="row">
+
+            <div class="col-12">
+              <div class="form-group">
+                <label for="typeb">Type of Business (Select)
+                  <span class="requiredstar">*</span>
+                </label>
+                <input type="string" id="typeb" class="form-control" placeholder="web development.." [formControlName]="'business_type'">
+                <div class="valid-feedback" [ngClass]="{'display-validation': regForm.get('business_type').valid}">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback" [ngClass]="{'display-validation': regForm.get('business_type').invalid && regForm.get('business_type').touched}">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ----------------Address---------------- -->
+          <div class="row">
+
+            <div class="col-12">
+              <div class="form-group">
+                <label for="address">Address
+                  <span class="requiredstar">*</span>
+                </label>
+                <input type="text" id="address" class="form-control" placeholder="Office Location..." [formControlName]="'address'">
+                <div class="valid-feedback" [ngClass]="{'display-validation': regForm.get('address').valid}">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback" [ngClass]="{'display-validation': regForm.get('address').invalid && regForm.get('address').touched}">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ----------------Address 2---------------- -->
+          <div class="row">
+
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="city">City
+                  <span class="requiredstar">*</span>
+                </label>
+                <input type="string" id="city" class="form-control" placeholder="Mumbai" [formControlName]="'city'">
+                <div class="valid-feedback" [ngClass]="{'display-validation': regForm.get('city').valid}">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback" [ngClass]="{'display-validation': regForm.get('city').invalid && regForm.get('city').touched}">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="state">State
+                  <span class="requiredstar">*</span>
+                </label>
+                <input type="string" id="state" class="form-control" placeholder="Maharashtra" [formControlName]="'state'">
+                <div class="valid-feedback" [ngClass]="{'display-validation': regForm.get('state').valid}">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback" [ngClass]="{'display-validation': regForm.get('state').invalid && regForm.get('state').touched}">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ----------------Address 3---------------- -->
+          <div class="row">
+
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="pcode">Postal Code
+                  <span class="requiredstar">*</span>
+                </label>
+                <input type="number" id="pcode" class="form-control" placeholder="400094" [formControlName]="'pincode'">
+                <div class="valid-feedback" [ngClass]="{'display-validation': regForm.get('pincode').valid}">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback" [ngClass]="{'display-validation': regForm.get('pincode').invalid && regForm.get('pincode').touched}">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="country">Country
+                  <span class="requiredstar">*</span>
+                </label>
+                <input type="string" id="country" class="form-control" placeholder="India" [formControlName]="'country'" [typeahead]="countries" [typeaheadOptionsLimit]="7" [typeaheadMinLength]="0">
+                <div class="valid-feedback" [ngClass]="{'display-validation': regForm.get('country').valid}">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback" [ngClass]="{'display-validation': regForm.get('country').invalid && regForm.get('country').touched}">
+                  This field is required.
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <!-- ----------------Info Alert---------------- -->
+          <alert type="info" *ngIf="waitAlert">
+            <span>Processing . . .   Please wait</span>
+          </alert>
+          <!-- ----------------Success Alert---------------- -->
+          <alert type="success" *ngIf="okayAlert">
+            <h4 class="alert-heading">Well done!</h4>
+            <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer
+              so that you can see how spacing within an alert works with this kind of content.</p>
+            <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+          </alert>
+          <!-- ----------------Error Alert---------------- -->
+          <alert type="danger" *ngIf="errorAlert">
+            <h4 class="alert-heading">Well done!</h4>
+            <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer
+              so that you can see how spacing within an alert works with this kind of content.</p>
+            <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+          </alert>
+
+          <!-- ----------------Buttons---------------- -->
+          <div class="row my-4">
+            <div class="col-12">
+              <button class="btn btn-primary mr-2" type="submit" [disabled]="regForm.invalid">Submit</button>
+              <button class="btn btn-danger" type="button" (click)="onReset()">Reset</button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
