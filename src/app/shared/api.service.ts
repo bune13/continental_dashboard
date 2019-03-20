@@ -30,7 +30,7 @@ export class ApiService{
   }
 
   onCheckEmailTaken(email:string):Observable<any>{
-    // console.log('INTO Check Email Taken')
+    console.log('INTO Check Email Taken', email)
     return this.httpClient.post(`${this.api_url}emailvalidation`, email, httpOptions)
       .pipe(debounceTime(2000))
       .pipe(delay(2000))

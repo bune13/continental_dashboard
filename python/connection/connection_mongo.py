@@ -5,6 +5,11 @@ def conection_admin_db():
     collection = con.admin_db
     return collection
 
+def conection_ssdi_data_db():
+    con = pymongo.MongoClient()
+    collection = con.ssdi
+    return collection
+
 def conection_user_db():
     con = pymongo.MongoClient()
     collection = con.user_db

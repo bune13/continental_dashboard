@@ -117,9 +117,10 @@ def prelogin():
     print ("############# On Pre Email Validation #############"        )
     # print (request.data)
     d = request.data
-    print ((d))
+    print (d)
     con = conection_admin_db()
     print(con)
+    print(con.regform)
     f = con.regform.find_one({'email': d})
     print (f, 10*'&')
     # print (type(f))

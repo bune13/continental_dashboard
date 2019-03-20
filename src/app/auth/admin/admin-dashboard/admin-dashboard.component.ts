@@ -15,8 +15,9 @@ export class AdminDashboardComponent implements OnInit {
   // ---------------- line chart ----------------
 
   public lineChartData:Array<any> = [
-    { data: [65, 59, 80, 81, 56, 55, 40, 80, 81, 56, 55, 40], label: '2017'} ,
-    { data: [28, 48, 40, 19, 86, 27, 90, 40, 19, 86, 27, 90], label: '2018'} ,
+    { data: [75, 45, 34, 62, 43, 33, 49, 75, 30, 88, 90, 54], label: '2017'} ,
+    { data: [65, 59, 45, 81, 56, 55, 40, 80, 81, 56, 55, 40], label: '2018'} ,
+    { data: [55, 79, 40], label: '2019'} ,
     // [1, 54, 48, 79, 9, 58, 5, 48, 79, 9, 58, 5],
     // [1, 54, 48, 34, 9, 58, 25, 48, 49, 9, 58, 5]
   ];
@@ -52,6 +53,14 @@ export class AdminDashboardComponent implements OnInit {
   public lineChartColors:Array<any> = [
     {
       backgroundColor: 'rgba(148,159,177,0)',
+      borderColor: '#d66161',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    },
+    {
+      backgroundColor: 'rgba(148,159,177,0)',
       borderColor: '#007bff',
       pointBackgroundColor: 'rgba(148,159,177,1)',
       pointBorderColor: '#fff',
@@ -72,8 +81,8 @@ export class AdminDashboardComponent implements OnInit {
 
   // ---------------- doughnut ----------------
 
-  public doughnutChartLabels:string[] = ['Desktop', 'Mobile', 'Others'];
-  public doughnutChartData:number[] = [350, 450, 100];
+  public doughnutChartLabels:string[] = ['Steel', 'Alloy', 'Unclassified', 'Spider', 'Air', 'Solid Polyurethane Elastomer'];
+  public doughnutChartData:number[] = [284749, 117618, 335845, 647, 1520, 199];
   public doughnutChartType:string = 'doughnut';
  
   // events
