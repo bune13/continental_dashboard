@@ -9,8 +9,9 @@
         <small>Unique visitors by month</small>
       </div>
       <div class="col-12">
-        <canvas baseChart height="60px" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [chartType]="lineChartType"
-          [colors]="lineChartColors" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        <canvas baseChart height="60px" [datasets]="lineChartData" [labels]="lineChartLabels"
+          [options]="lineChartOptions" [chartType]="lineChartType" [colors]="lineChartColors"
+          (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
       </div>
     </div>
   </div>
@@ -24,6 +25,7 @@
 
           <!-- ------------handle left major space------------ -->
           <div class="col-12 col-lg-8">
+            <!-- ------------User Trending------------ -->
             <div class="row">
 
               <div class="col-12 mb-3">
@@ -55,20 +57,50 @@
               </div>
 
             </div>
+
+            <!-- ------------Chart For Reasons------------ -->
+            <div class="row mt-3">
+              <div class="col-12">
+                <div class=" donut-chart-right-upper-wait-drop" *ngIf="pleaseWaitBlinkReasonChart">
+                  <div class="blink_me">Please Wait...</div>
+                </div>
+
+                <div class="reasons-admin-chart px-3 py-3">
+
+                  <div class="col-12">
+                    <span class="admin-analytics-titles">Reasons</span>
+                  </div>
+                  <div class="col-12">
+                    <small>Tire Wear Issues</small>
+                  </div>
+
+                  <div *ngIf="!pleaseWaitBlinkReasonChart">
+                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                      [plugins]="barChartPlugins" [colors]="chartColors" [legend]="barChartLegend"
+                      [chartType]="barChartType">
+                    </canvas>
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- ------------handle right minor space------------ -->
-          <div class="col-12 col-lg-4">
+          <div class="col-12 col-lg-4 mt-3 mt-lg-0 mt-xl-0">
+            <!-- ------------Pie Chart for Rimtype------------ -->
             <div class="row">
               <div class="col-12 mb-3">
                 <span class="admin-analytics-titles">Rimtype Specification</span>
               </div>
               <div class="col-12">
-                <div class="on-box donut-chart-right-upper-wait-drop" *ngIf="pleaseWaitBlink">
+                <div class=" donut-chart-right-upper-wait-drop" *ngIf="pleaseWaitBlinkPieChart">
                   <div class="blink_me">Please Wait...</div>
                 </div>
-                <div class="on-box donut-chart-right-upper" *ngIf="!pleaseWaitBlink">
-                  <canvas baseChart height="99px" width="80px" [data]="doughnutChartData" [labels]="doughnutChartLabels" [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                <div class=" donut-chart-right-upper" *ngIf="!pleaseWaitBlinkPieChart">
+                  <canvas baseChart height="99px" width="80px" [data]="doughnutChartData" [labels]="doughnutChartLabels"
+                    [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)">
                   </canvas>
                 </div>
               </div>

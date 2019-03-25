@@ -104,10 +104,17 @@ export class ApiService{
   }
 
   //  --------------------------------------------
-  //               On Doughnut Click
+  //               On Doughnut Click Reasons
   //  --------------------------------------------
   onDoughnutRimtype(){
     return this.httpClient.get<any[]>(`${this.api_url}onDoughnutRimtype`, httpOptions)
+  }
+
+  //  --------------------------------------------
+  //               On Bar Click Reasons
+  //  --------------------------------------------
+  onBarReasons(){
+    return this.httpClient.get<any[]>(`${this.api_url}onBarReasons`, httpOptions)
   }
 
 

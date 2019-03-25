@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
+import { randomColor } from 'randomcolor'
+import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { Label, Color, BaseChartDirective, MultiDataSet } from 'ng2-charts';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -7,29 +11,72 @@ import { ApiService } from 'src/app/shared/api.service';
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
-  pleaseWaitBlink:boolean = true
+  pleaseWaitBlinkPieChart:boolean = true
+  pleaseWaitBlinkReasonChart:boolean = true
 
-  public doughnutChartLabels:string[] = [];
-  public doughnutChartData:number[] = [];
-  public doughnutChartType:string = 'doughnut';
+  public doughnutChartLabels: Label[] = [];
+  public doughnutChartData:MultiDataSet = [];
+  public doughnutChartType:ChartType = 'doughnut'
   public elem:any;
+  public elem1:any;
+  public pieColors:string[] = []
+
+  public barChartLabels: Label[] = [];
+  public barChartType: ChartType = 'horizontalBar'
+  public barChartLegend = false;
+  public reasonsData:number[] = []
+  public reasonsBarColors:string[] = []
 
   constructor(private apiService: ApiService) {
+    this.apiService.onBarReasons().subscribe(
+      (result)=>{
+        this.pleaseWaitBlinkReasonChart = false
+        console.log(result)        
+        result.forEach(element => {
+          // element['reason'] !== null ? this.elem1 = element['reason'] : this.elem1 = "Unclassified"
+          // this.barChartLabels.push(this.elem1)
+          // this.reasonsData.push(element['number'])
+          if(element['reason'] !== null){
+            this.barChartLabels.push(element['reason'])
+            this.reasonsData.push(element['number'])
+            this.reasonsBarColors.push(randomColor({
+              luminosity: 'light',
+              format: 'rgba',
+              alpha: 0.9
+            }))
+          }
+          console.log(element)
+        })
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+
+
     this.apiService.onDoughnutRimtype().subscribe(
       (result)=>{
         console.log(result)
-        this.pleaseWaitBlink = false
+        this.pleaseWaitBlinkPieChart = false
         result.forEach(element => {
           element['rimtype'] !== null ? this.elem = element['rimtype'] : this.elem = "Unclassified"
-          console.log(this.elem)
           this.doughnutChartLabels.push(this.elem)
           this.doughnutChartData.push(element['number'])
+          this.pieColors.push(randomColor({
+            luminosity: 'bright',
+            format: 'rgba',
+            alpha: 0.9
+          }))
+          console.log(this.elem)
         });
       },
       (error)=>{
         console.log(error)
       }
     )
+
+    
+
   }
 
   ngOnInit() {
@@ -37,14 +84,14 @@ export class AdminDashboardComponent implements OnInit {
 
   // ---------------- line chart ----------------
 
-  public lineChartData:Array<any> = [
+  public lineChartData:ChartDataSets[] = [
     { data: [75, 45, 34, 62, 43, 33, 49, 75, 30, 88, 90, 54], label: '2017'} ,
     { data: [65, 59, 45, 81, 56, 55, 40, 80, 81, 56, 55, 40], label: '2018'} ,
     { data: [55, 79, 40], label: '2019'} ,
     // [1, 54, 48, 79, 9, 58, 5, 48, 79, 9, 58, 5],
     // [1, 54, 48, 34, 9, 58, 25, 48, 49, 9, 58, 5]
   ];
-  public lineChartLabels:Array<any> = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  public lineChartLabels:Label[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   public lineChartOptions:any = {
     responsive: true,
     tooltips: {
@@ -103,36 +150,73 @@ export class AdminDashboardComponent implements OnInit {
   public lineChartType:string = 'line';
 
   // ---------------- doughnut ----------------
-
-
-
-  
-
   private donutColors=[
     {
-      backgroundColor: ['rgba(110, 114, 20, 1)',
-                        'rgba(118, 183, 172, 1)',
-                        'rgba(0, 148, 97, 1)',
-                        'rgba(129, 78, 40, 1)',
-                        'red',
-                        '#00d'
-                      ],
+      backgroundColor: this.pieColors,
       borderColor: 'rgb(103, 58, 183, 0.0)',
-      // pointBackgroundColor: 'rgb(103, 58, 183)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
-      // pointHoverBorderColor: 'rgba(103, 58, 183, .8)',
       borderWidth:'0'
     }
   ];
  
+  // ---------------- Bar Chart ----------------
+  public barChartOptions: any = {
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: { xAxes: [{
+      // stacked: true
+    }], yAxes: [{
+      // stacked: true
+    }] },
+    legend: {
+      position: 'bottom',
+      // display: false,
+      labels: {
+        fontColor: '#fff',
+        boxWidth: 20,
+        fontStyle: 'bold',
+        fontSize: 16,          
+      }
+    },
+    elements:{
+      line:{
+        tension: 0,
+        labels:{
+          fontColor:'#fff'
+        }
+      }
+    },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      }
+    }
+  };
+  public barChartData: ChartDataSets[] = [
+    { data: this.reasonsData, label: 'Reasons' }
+  ];
+  public chartColors: Array<any> = [
+    { // first color
+      backgroundColor: this.reasonsBarColors
+    }
+  ];
+
+
+  
+
   // events
   public chartClicked(e:any):void {
-    console.log(e);
+    // console.log(e);
   }
- 
+
   public chartHovered(e:any):void {
-    console.log(e);
+    // console.log(e);
   }
+
+
+
+
 
 }

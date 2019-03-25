@@ -1,6 +1,6 @@
-.admin-analytics-titles{
-    font-size: 120%;
-    font-weight: 300;
+.admin-analytics-titles {
+  font-size: 120%;
+  font-weight: 300;
 }
 
 .admin-dashboard-main-line-chart {
@@ -25,16 +25,21 @@
 
 .donut-chart-right-upper {
   padding: 30px;
-  background:linear-gradient(rgba(198, 198, 198, 0.7), rgba(0, 0, 0, 0.6));
+  background: linear-gradient(rgba(240, 240, 240, 0.7), rgba(240, 240, 240, 0.7));
 }
 
-.donut-chart-right-upper-wait-drop{
+.donut-chart-right-upper-wait-drop {
   color: #fff;
-  background:linear-gradient(rgba(198, 198, 198, 0.7), rgba(0, 0, 0, 0.6));
+  background: linear-gradient(rgba(51, 51, 51, 0.7), rgba(51, 51, 51, 0.7));
   padding: 90px 0px;
   text-align: center;
   vertical-align: middle;
   height: 200px;
+}
+
+.reasons-admin-chart {
+  background-color: #212121;
+  color: #fff;
 }
 
 .left-upper-showcase {

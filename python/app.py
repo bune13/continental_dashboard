@@ -194,7 +194,7 @@ def onDashboardClick():
     return dumps(c), 200
 
 # -------------------------------------------------
-#                 get doughnut data
+#                 get doughnut rimtype data
 # -------------------------------------------------
 @app.route('/onDoughnutRimtype', methods=["GET"])
 def onDoughnutRimtypeClick():
@@ -214,11 +214,26 @@ def onDoughnutRimtypeClick():
     # return jsonify(dumps(c)), 200
     return dumps(total), 200
 
-onDoughnutRimtypeClick()
-
-
-
-
+# -------------------------------------------------
+#                 get barchart reasons data
+# -------------------------------------------------
+@app.route('/onBarReasons', methods=["GET"])
+def onBarReasonsClick():
+    print ("-~-~-~-~-~-~-~ On reasons click -~-~-~-~-~-~-~-~")
+    rims = []
+    total = []
+    collection = conection_ssdi_data_db()
+    cursor = collection.tread_depth
+    # c = cursor.find({}).limit(50)
+    rims = cursor.distinct("reason")
+    for i in rims:
+        total.append({
+            "reason":i,
+            "number":cursor.count_documents({"reason":i})
+        })
+    print(total)
+    # return jsonify(dumps(c)), 200
+    return dumps(total), 200
 
 if __name__ == '__main__':
     app.run(debug = True,host='0.0.0.0')
