@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -6,9 +7,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
-  pleaseWaitBlink:boolean = false
+  pleaseWaitBlink:boolean = true
 
-  constructor() { }
+  public doughnutChartLabels:string[] = [];
+  public doughnutChartData:number[] = [];
+  public doughnutChartType:string = 'doughnut';
+  public elem:any;
+
+  constructor(private apiService: ApiService) {
+    this.apiService.onDoughnutRimtype().subscribe(
+      (result)=>{
+        console.log(result)
+        this.pleaseWaitBlink = false
+        result.forEach(element => {
+          element['rimtype'] !== null ? this.elem = element['rimtype'] : this.elem = "Unclassified"
+          console.log(this.elem)
+          this.doughnutChartLabels.push(this.elem)
+          this.doughnutChartData.push(element['number'])
+        });
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+  }
 
   ngOnInit() {
   }
@@ -82,9 +104,9 @@ export class AdminDashboardComponent implements OnInit {
 
   // ---------------- doughnut ----------------
 
-  public doughnutChartLabels:string[] = ['Steel', 'Alloy', 'Unclassified', 'Spider', 'Air', 'Solid Polyurethane Elastomer'];
-  public doughnutChartData:number[] = [284749, 117618, 335845, 647, 1520, 199];
-  public doughnutChartType:string = 'doughnut';
+
+
+  
 
   private donutColors=[
     {

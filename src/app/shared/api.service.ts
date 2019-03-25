@@ -103,5 +103,12 @@ export class ApiService{
     return this.httpClient.get(`${this.api_url}onDashboardClick`, httpOptions)
   }
 
+  //  --------------------------------------------
+  //               On Doughnut Click
+  //  --------------------------------------------
+  onDoughnutRimtype(){
+    return this.httpClient.get<any[]>(`${this.api_url}onDoughnutRimtype`, httpOptions)
+  }
+
 
 }
