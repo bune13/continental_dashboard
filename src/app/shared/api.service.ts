@@ -26,11 +26,12 @@ export class ApiService{
   }
 
   onRegPost(value){
+    console.log(value)
     return this.httpClient.post(`${this.api_url}register`, value, httpOptions)
   }
 
   onCheckEmailTaken(email:string):Observable<any>{
-    console.log('INTO Check Email Taken', email)
+    console.log('INTO Check Email Taken', email, typeof email)
     return this.httpClient.post(`${this.api_url}emailvalidation`, email, httpOptions)
       .pipe(debounceTime(2000))
       .pipe(delay(2000))
@@ -94,5 +95,13 @@ export class ApiService{
     // return this.token != null
     return localStorage.getItem('id_token') != null
   }
+
+  //  --------------------------------------------
+  //               On Dashboard Click
+  //  --------------------------------------------
+  getSSDIDashboardDataCheck(){
+    return this.httpClient.get(`${this.api_url}onDashboardClick`, httpOptions)
+  }
+
 
 }

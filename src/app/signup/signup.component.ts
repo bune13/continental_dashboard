@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
 
   onSubmit(){
     if(this.regForm.valid){
-      // console.log(this.regForm.value);
+      console.log(this.regForm.value);
       // console.log(this.regForm);
       this.waitAlert = true;          
       this.apiService.onRegPost(this.regForm.value).subscribe(

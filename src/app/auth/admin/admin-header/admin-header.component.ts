@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
   selector: 'app-admin-header',
@@ -7,7 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminHeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private apiService:ApiService) {
+    this.apiService.getSSDIDashboardDataCheck().subscribe(
+      (result)=>{
+        console.log(result)
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+    console.log("Admin Header");
+   }
 
   ngOnInit() {
   }

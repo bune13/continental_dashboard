@@ -8,6 +8,7 @@ from flask_cors import CORS
 from flask import Response
 from flask import render_template,send_file
 from bson.json_util import dumps
+from bson.objectid import ObjectId
 from flask import Flask, Response,session                                                      #importing all the modules
 from flask import Flask, Response,request                                                      #importing all the modules
 from flask import Flask, render_template                                                       #importing all the modules
@@ -15,11 +16,7 @@ import yaml            #importing the format of the file used to store data
 import requests
 from flask import send_file 
 import json
-import ast  
-# from Crypto.Hash import SHA256
-# from flask.ext.api import status
-# from flask_restful import Resource, Api
-# from flask_restful  import Api
+import ast
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -27,15 +24,10 @@ from flask_jwt_extended import (JWTManager, create_access_token,
                                 create_refresh_token, jwt_required,
                                 jwt_refresh_token_required, get_jwt_identity,
                                 get_raw_jwt)
-from connection.connection_mongo import conection_admin_db,conection_user_db,conection_agent_db
+from connection.connection_mongo import conection_admin_db,conection_user_db,conection_agent_db, conection_ssdi_data_db
 
-con = pymongo.MongoClient()
-collection = con.test
-print(collection, 100*'-')
 app = Flask(__name__)
 CORS(app)
-TWILIO_ACCOUNT_SID = "AC7f98069648dfa6893ef7c11240710a21"                       #authentication ID for the account
-TWILIO_AUTH_TOKEN = "448e3ecd0f3406352252aaebe1b546c5" 
 # -------------- MAIL CONFIGURATION --------------
 app.config['MAIL_SERVER'] = 'smtp.mail.yahoo.com'
 app.config['MAIL_PORT'] = 587
@@ -50,14 +42,16 @@ app.config['JWT_SECRET_KEY'] = 'a37e1644f392640ce05cc29fc1c0859ddd56badba6a68d84
 # app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(minutes=60)
 # app.config['JWT_HEADER_NAME'] = 'Meow'
 jwt = JWTManager(app)
-print (jwt)
+# print (jwt)
 
 app.secret_key = "secret key"
 
 def session_id():
     return request.values.get('CallSid') or request.values['MessageSid']
+
 # -------------- TO CHECK IF USERID EXISTS --------------
 def checkusername(value):
+    collection = conection_admin_db()
     d = str(uuid.uuid4())[:8]
     if (collection.regform.find_one({'username': value})):
         checkusername(d)
@@ -96,10 +90,10 @@ def register():
         msg = Message('Welcome', sender = 'test.dash@yahoo.com', recipients = [d['email']])
         print (d)
         
-        # confirm_url = "http://localhost:4200/"+UUID_STRIN
-        # msg.html=render_template('confirm.html', confirm_url=confirm_url)
-        # #msg.body = html
-        # print msg,type(msg.body)
+        confirm_url = "http://localhost:4200/"+UUID_STRIN
+        msg.html=render_template('confirm.html', confirm_url=confirm_url)
+        #msg.body = html
+        print(msg,type(msg.body))
         mail.send(msg)
 
         return jsonify({'success':True}), 200
@@ -113,17 +107,14 @@ def register():
     
 @app.route('/emailvalidation', methods=["POST"])
 def prelogin():
-#    print dir(request)   
-    print ("############# On Pre Email Validation #############"        )
-    # print (request.data)
-    d = request.data
-    print (d)
-    con = conection_admin_db()
-    print(con)
-    print(con.regform)
-    f = con.regform.find_one({'email': d})
-    print (f, 10*'&')
-    # print (type(f))
+    print(request, 2*"#")
+    print("############# On Pre Email Validation #############")
+    print(type(request.data))
+    d = str(request.data, 'utf-8')
+    print (type(d))
+    collection = conection_admin_db()
+    cursor = collection.regform
+    f = cursor.find_one({'email': d})
     if f:
         return "1"
     else:
@@ -145,7 +136,7 @@ def onlogin():
     refresh_token = create_refresh_token(identity=d['username'])
 
     con = conection_admin_db()
-    c =con.regform.find_one({'username':uname,'password':psw})
+    c = con.regform.find_one({'username':uname,'password':psw})
     print (c)
     if c:
         return jsonify({'Found':True, 'access_token': access_token,'refresh_token': refresh_token}), 200
@@ -186,6 +177,48 @@ def onforgetPassword():
     else:
         return jsonify({'Found':False}), 404
 
+# -------------------------------------------------
+#                 get SSDI data
+# -------------------------------------------------
+@app.route('/onDashboardClick', methods=["GET"])
+def onDashboardClick():
+    print ("############# On dasboard click #############")
+    collection = conection_ssdi_data_db()
+    cursor = collection.tread_depth
+    c = cursor.find({}).limit(50)
+    # for i in cursor.find({}):
+    #     print(i)
+    # print(cursor.count_documents({"finding":"test finished"}))
+    # print(c)
+    # return jsonify(dumps(c)), 200
+    return dumps(c), 200
+
+# -------------------------------------------------
+#                 get doughnut data
+# -------------------------------------------------
+@app.route('/onDoughnutRimtype', methods=["GET"])
+def onDoughnutRimtypeClick():
+    print ("-~-~-~-~-~-~-~ On rimtype click -~-~-~-~-~-~-~-~")
+    rims = []
+    total = []
+    collection = conection_ssdi_data_db()
+    cursor = collection.tread_depth
+    # c = cursor.find({}).limit(50)
+    rims = cursor.distinct("rimtype")
+    for i in rims:
+        total.append({
+            "rimtype":i,
+            "number":cursor.count_documents({"rimtype":i})
+        })
+    print(total)
+    # return jsonify(dumps(c)), 200
+    return dumps(total), 200
+
+onDoughnutRimtypeClick()
+
+
+
+
 
 if __name__ == '__main__':
-   app.run(debug = True,host='0.0.0.0')
+    app.run(debug = True,host='0.0.0.0')

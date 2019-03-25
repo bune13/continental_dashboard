@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
+  pleaseWaitBlink:boolean = false
 
   constructor() { }
 
@@ -84,6 +85,24 @@ export class AdminDashboardComponent implements OnInit {
   public doughnutChartLabels:string[] = ['Steel', 'Alloy', 'Unclassified', 'Spider', 'Air', 'Solid Polyurethane Elastomer'];
   public doughnutChartData:number[] = [284749, 117618, 335845, 647, 1520, 199];
   public doughnutChartType:string = 'doughnut';
+
+  private donutColors=[
+    {
+      backgroundColor: ['rgba(110, 114, 20, 1)',
+                        'rgba(118, 183, 172, 1)',
+                        'rgba(0, 148, 97, 1)',
+                        'rgba(129, 78, 40, 1)',
+                        'red',
+                        '#00d'
+                      ],
+      borderColor: 'rgb(103, 58, 183, 0.0)',
+      // pointBackgroundColor: 'rgb(103, 58, 183)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      // pointHoverBorderColor: 'rgba(103, 58, 183, .8)',
+      borderWidth:'0'
+    }
+  ];
  
   // events
   public chartClicked(e:any):void {

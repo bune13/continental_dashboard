@@ -25,10 +25,30 @@
 
 .donut-chart-right-upper {
   padding: 30px;
+  background:linear-gradient(rgba(198, 198, 198, 0.7), rgba(0, 0, 0, 0.6));
+}
+
+.donut-chart-right-upper-wait-drop{
+  color: #fff;
+  background:linear-gradient(rgba(198, 198, 198, 0.7), rgba(0, 0, 0, 0.6));
+  padding: 90px 0px;
+  text-align: center;
+  vertical-align: middle;
+  height: 200px;
 }
 
 .left-upper-showcase {
   height: 200px;
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }
 
 /* Small devices (landscape phones, 544px and up) */

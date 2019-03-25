@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="container my-5">
+  <div class="container-fluid my-5">
     <div class="row">
       <div class="col-12 mx-auto">
 
@@ -64,9 +64,11 @@
                 <span class="admin-analytics-titles">Rimtype Specification</span>
               </div>
               <div class="col-12">
-                <div class="on-box donut-chart-right-upper">
-                  <canvas baseChart height="99px" width="80px" [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"
-                    (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                <div class="on-box donut-chart-right-upper-wait-drop" *ngIf="pleaseWaitBlink">
+                  <div class="blink_me">Please Wait...</div>
+                </div>
+                <div class="on-box donut-chart-right-upper" *ngIf="!pleaseWaitBlink">
+                  <canvas baseChart height="99px" width="80px" [data]="doughnutChartData" [labels]="doughnutChartLabels" [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
                   </canvas>
                 </div>
               </div>
