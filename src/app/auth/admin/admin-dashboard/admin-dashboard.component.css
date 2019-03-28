@@ -38,8 +38,8 @@
 }
 
 .reasons-admin-chart {
-  background-color: #212121;
-  color: #fff;
+  background: linear-gradient(rgba(240, 240, 240, 0.7), rgba(240, 240, 240, 0.7));
+  color: #000;
 }
 
 .left-upper-showcase {

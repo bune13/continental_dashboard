@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
 import { randomColor } from 'randomcolor'
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import 'chart.piecelabel.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { Label, Color, BaseChartDirective, MultiDataSet } from 'ng2-charts';
 
@@ -20,6 +21,7 @@ export class AdminDashboardComponent implements OnInit {
   public elem:any;
   public elem1:any;
   public pieColors:string[] = []
+  public staticYellow:string = "#e67e22"
 
   public barChartLabels: Label[] = [];
   public barChartType: ChartType = 'horizontalBar'
@@ -28,10 +30,19 @@ export class AdminDashboardComponent implements OnInit {
   public reasonsBarColors:string[] = []
 
   constructor(private apiService: ApiService) {
+    this.onStartOfPage()
+  }
+
+  ngOnInit() {
+  }  
+
+  onStartOfPage(){
+    console.log("Hey Start Page on")
     this.apiService.onBarReasons().subscribe(
       (result)=>{
         this.pleaseWaitBlinkReasonChart = false
-        console.log(result)        
+        console.log(result)
+               
         result.forEach(element => {
           // element['reason'] !== null ? this.elem1 = element['reason'] : this.elem1 = "Unclassified"
           // this.barChartLabels.push(this.elem1)
@@ -39,13 +50,14 @@ export class AdminDashboardComponent implements OnInit {
           if(element['reason'] !== null){
             this.barChartLabels.push(element['reason'])
             this.reasonsData.push(element['number'])
-            this.reasonsBarColors.push(randomColor({
-              luminosity: 'light',
-              format: 'rgba',
-              alpha: 0.9
-            }))
+            // this.reasonsBarColors.push(randomColor({
+            //   luminosity: 'light',
+            //   format: 'rgba',
+            //   alpha: 0.9
+            // }))
+            this.reasonsBarColors.push(this.staticYellow)
           }
-          console.log(element)
+          console.log(this.reasonsBarColors)
         })
       },
       (error)=>{
@@ -63,7 +75,8 @@ export class AdminDashboardComponent implements OnInit {
           this.doughnutChartLabels.push(this.elem)
           this.doughnutChartData.push(element['number'])
           this.pieColors.push(randomColor({
-            luminosity: 'bright',
+            hue: 'red',
+            luminosity: 'light',
             format: 'rgba',
             alpha: 0.9
           }))
@@ -74,13 +87,7 @@ export class AdminDashboardComponent implements OnInit {
         console.log(error)
       }
     )
-
-    
-
-  }
-
-  ngOnInit() {
-  }
+  }  
 
   // ---------------- line chart ----------------
 
@@ -159,6 +166,16 @@ export class AdminDashboardComponent implements OnInit {
       borderWidth:'0'
     }
   ];
+
+  public doughnutChartOptions: any = {
+    pieceLabel: {
+      render: function (args) {
+        const label = args.label,
+              value = args.value;
+        return label + ': ' + value;
+      }
+    }
+  }
  
   // ---------------- Bar Chart ----------------
   public barChartOptions: any = {

@@ -9,6 +9,7 @@ from flask import Response
 from flask import render_template,send_file
 from bson.json_util import dumps
 from bson.objectid import ObjectId
+from bson.son import SON
 from flask import Flask, Response,session                                                      #importing all the modules
 from flask import Flask, Response,request                                                      #importing all the modules
 from flask import Flask, render_template                                                       #importing all the modules
@@ -90,11 +91,11 @@ def register():
         msg = Message('Welcome', sender = 'test.dash@yahoo.com', recipients = [d['email']])
         print (d)
         
-        confirm_url = "http://localhost:4200/"+UUID_STRIN
-        msg.html=render_template('confirm.html', confirm_url=confirm_url)
-        #msg.body = html
-        print(msg,type(msg.body))
-        mail.send(msg)
+        # confirm_url = "http://localhost:4200/"+UUID_STRIN
+        # msg.html=render_template('confirm.html', confirm_url=confirm_url)
+        # #msg.body = html
+        # print(msg,type(msg.body))
+        # mail.send(msg)
 
         return jsonify({'success':True}), 200
     else:
@@ -178,22 +179,6 @@ def onforgetPassword():
         return jsonify({'Found':False}), 404
 
 # -------------------------------------------------
-#                 get SSDI data
-# -------------------------------------------------
-@app.route('/onDashboardClick', methods=["GET"])
-def onDashboardClick():
-    print ("############# On dasboard click #############")
-    collection = conection_ssdi_data_db()
-    cursor = collection.tread_depth
-    c = cursor.find({}).limit(50)
-    # for i in cursor.find({}):
-    #     print(i)
-    # print(cursor.count_documents({"finding":"test finished"}))
-    # print(c)
-    # return jsonify(dumps(c)), 200
-    return dumps(c), 200
-
-# -------------------------------------------------
 #                 get doughnut rimtype data
 # -------------------------------------------------
 @app.route('/onDoughnutRimtype', methods=["GET"])
@@ -234,6 +219,35 @@ def onBarReasonsClick():
     print(total)
     # return jsonify(dumps(c)), 200
     return dumps(total), 200
+
+# -------------------------------------------------
+#                 get dates and count
+# -------------------------------------------------
+@app.route('/onCountAndDates', methods=["GET"])
+def onCountAndDates():
+    print ("-~-~-~-~-~-~-~ onCountAndDates -~-~-~-~-~-~-~-~")
+    total = []
+    collection = conection_ssdi_data_db()
+    cursor = collection.tread_depth
+    pipeline = [
+        {"$group" : 
+            {
+                "_id" : { "year": { "$year": "$date" } },           
+                "count": { "$sum": 1 }
+            }
+        },
+        {"$sort": SON([("count", -1)]) }
+    ]
+    rims = cursor.aggregate(pipeline)
+    for i in rims:
+        total.append({
+            "year":i['_id']['year'],
+            "count":i['count']
+        })
+    print(total)
+    # return jsonify(dumps(c)), 200
+    return dumps(total), 200
+
 
 if __name__ == '__main__':
     app.run(debug = True,host='0.0.0.0')
