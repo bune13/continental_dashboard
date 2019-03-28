@@ -91,11 +91,11 @@ def register():
         msg = Message('Welcome', sender = 'test.dash@yahoo.com', recipients = [d['email']])
         print (d)
         
-        # confirm_url = "http://localhost:4200/"+UUID_STRIN
-        # msg.html=render_template('confirm.html', confirm_url=confirm_url)
-        # #msg.body = html
-        # print(msg,type(msg.body))
-        # mail.send(msg)
+        confirm_url = "http://localhost:4200/"+str(UUID_STRIN)
+        msg.html=render_template('confirm.html', confirm_url=confirm_url)
+        msg.body = html
+        print(msg,type(msg.body))
+        mail.send(msg)
 
         return jsonify({'success':True}), 200
     else:
@@ -247,6 +247,31 @@ def onCountAndDates():
     print(total)
     # return jsonify(dumps(c)), 200
     return dumps(total), 200
+
+# -------------------------------------------------
+#                 get unique countries & wheel pos-
+# -------------------------------------------------
+@app.route('/onUniqueCandWP', methods=["GET"])
+def onUniqueCandWP():
+    print ("-~-~-~-~-~-~-~ onUniqueCandWP -~-~-~-~-~-~-~-~")
+    total = []
+    collection = conection_ssdi_data_db()
+    cursor = collection.tread_depth
+    
+    rims = cursor.distinct("tire.country_fk")
+    a = 0
+    for i in rims:        
+        a += 1
+    rims = cursor.dis
+    # print(a)
+    total.append({
+        "uq_desh":a,
+        # "whl_pos":i['count']
+    })
+    # return jsonify(dumps(c)), 200
+    return dumps(total), 200
+
+onUniqueCandWP()
 
 
 if __name__ == '__main__':

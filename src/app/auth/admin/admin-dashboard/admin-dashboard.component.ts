@@ -57,7 +57,7 @@ export class AdminDashboardComponent implements OnInit {
             // }))
             this.reasonsBarColors.push(this.staticYellow)
           }
-          console.log(this.reasonsBarColors)
+          // console.log(this.reasonsBarColors)
         })
       },
       (error)=>{
