@@ -19,8 +19,50 @@
 }
 
 .left-upper-showcase {
-  padding: 10px 30px;
-  text-align: center;
+  min-height: 280px;
+  padding: 10px 20px;
+}
+
+.lable-logo-fa {
+  font-size: 200%;
+  color: #fff;
+  border-radius: 100px;
+  -webkit-box-shadow: inset 0px 0px 24px 2px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: inset 0px 0px 24px 2px rgba(0, 0, 0, 0.22);
+  box-shadow: inset 0px 0px 24px 2px rgba(0, 0, 0, 0.22)
+}
+
+.label-1-fa {
+  background: linear-gradient(rgba(67, 206, 162, 1), rgba(24, 90, 157, 1));
+}
+
+.label-2-fa {
+  background: linear-gradient(rgba(0, 198, 255, 1), rgba(0, 114, 255, 1));
+}
+
+.label-3-fa {
+  background: linear-gradient(rgba(157, 80, 187, 1), rgba(168, 50, 121, 1));
+}
+
+.label-4-fa {
+  background: linear-gradient(rgba(248, 54, 0, 1), rgba(254, 140, 0, 1));
+}
+
+.textKPOI {
+  font-size: 200%;  
+}
+
+.topYears {
+  background: -webkit-linear-gradient(rgba(24, 90, 157, 1), rgba(67, 206, 162, 1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+}
+
+.uniqueCandWP {
+  background: -webkit-linear-gradient(rgba(0, 198, 255, 1), rgba(0, 114, 255, 1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .donut-chart-right-upper {
@@ -38,12 +80,10 @@
 }
 
 .reasons-admin-chart {
-  background: linear-gradient(rgba(240, 240, 240, 0.7), rgba(240, 240, 240, 0.7));
-  color: #000;
-}
-
-.left-upper-showcase {
-  height: 200px;
+  /* background: linear-gradient(rgba(240, 240, 240, 0.7), rgba(240, 240, 240, 0.7));
+  color: #000; */
+  background-color: #212121;
+  color: #fff;
 }
 
 .blink_me {

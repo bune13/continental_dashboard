@@ -117,5 +117,35 @@ export class ApiService{
     return this.httpClient.get<any[]>(`${this.api_url}onBarReasons`, httpOptions)
   }
 
+  //  --------------------------------------------
+  //               onCountAndDates
+  //  --------------------------------------------
+  
+  onCountAndDates(value){
+    return this.httpClient.post<any[]>(`${this.api_url}onCountAndDates`,value, httpOptions)
+    // .subscribe(
+    //   (result)=>{
+    //     console.log(result)
+    //   },
+    //   (error)=>{
+    //     console.log(error)
+    //   }
+    // )
+  }
+
+  //  --------------------------------------------
+  //     on Unique Countries and Wheelpositions
+  //  --------------------------------------------
+  onUniqueCandWP(){
+    return this.httpClient.get<any[]>(`${this.api_url}onUniqueCandWP`, httpOptions)
+  }
+
+  //  --------------------------------------------
+  //     on Unique Countries and Wheelpositions
+  //  --------------------------------------------
+  onUniqueWP(){
+    return this.httpClient.get<any[]>(`${this.api_url}onUniqueWP`, httpOptions)
+  }
+
 
 }

@@ -195,7 +195,7 @@ def onDoughnutRimtypeClick():
             "rimtype":i,
             "number":cursor.count_documents({"rimtype":i})
         })
-    print(total)
+    # print(total)
     # return jsonify(dumps(c)), 200
     return dumps(total), 200
 
@@ -216,17 +216,20 @@ def onBarReasonsClick():
             "reason":i,
             "number":cursor.count_documents({"reason":i})
         })
-    print(total)
+    # print(total)
     # return jsonify(dumps(c)), 200
     return dumps(total), 200
 
 # -------------------------------------------------
 #                 get dates and count
 # -------------------------------------------------
-@app.route('/onCountAndDates', methods=["GET"])
+@app.route('/onCountAndDates', methods=["POST"])
 def onCountAndDates():
     print ("-~-~-~-~-~-~-~ onCountAndDates -~-~-~-~-~-~-~-~")
+    d = int(request.data)
+    print (type(d))
     total = []
+    final = []
     collection = conection_ssdi_data_db()
     cursor = collection.tread_depth
     pipeline = [
@@ -236,6 +239,7 @@ def onCountAndDates():
                 "count": { "$sum": 1 }
             }
         },
+        # { "$limit" : 5 },
         {"$sort": SON([("count", -1)]) }
     ]
     rims = cursor.aggregate(pipeline)
@@ -244,17 +248,18 @@ def onCountAndDates():
             "year":i['_id']['year'],
             "count":i['count']
         })
-    print(total)
+    for i in range(0, d):
+        final.append(total[i])
+    print(final)
     # return jsonify(dumps(c)), 200
-    return dumps(total), 200
+    return dumps(final), 200
 
 # -------------------------------------------------
-#                 get unique countries & wheel pos-
+#         get unique countries
 # -------------------------------------------------
 @app.route('/onUniqueCandWP', methods=["GET"])
 def onUniqueCandWP():
     print ("-~-~-~-~-~-~-~ onUniqueCandWP -~-~-~-~-~-~-~-~")
-    total = []
     collection = conection_ssdi_data_db()
     cursor = collection.tread_depth
     
@@ -263,15 +268,24 @@ def onUniqueCandWP():
     for i in rims:        
         a += 1
     rims = cursor.dis
-    # print(a)
-    total.append({
-        "uq_desh":a,
-        # "whl_pos":i['count']
-    })
-    # return jsonify(dumps(c)), 200
-    return dumps(total), 200
+    return dumps(a), 200
 
-onUniqueCandWP()
+# -------------------------------------------------
+#         get wheel pos-
+# -------------------------------------------------
+@app.route('/onUniqueWP', methods=["GET"])
+def onUniqueWP():
+    print ("-~-~-~-~-~-~-~ onUniqueCandWP -~-~-~-~-~-~-~-~")
+    collection = conection_ssdi_data_db()
+    cursor = collection.tread_depth
+    
+    rims1 = cursor.distinct("wheelposition")
+    b = 0
+    for i in rims1:        
+        b += 1
+    rims = cursor.dis
+    return dumps(b), 200
+
 
 
 if __name__ == '__main__':

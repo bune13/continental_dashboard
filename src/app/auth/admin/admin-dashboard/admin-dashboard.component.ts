@@ -5,6 +5,7 @@ import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import 'chart.piecelabel.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { Label, Color, BaseChartDirective, MultiDataSet } from 'ng2-charts';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -15,29 +16,40 @@ export class AdminDashboardComponent implements OnInit {
   pleaseWaitBlinkPieChart:boolean = true
   pleaseWaitBlinkReasonChart:boolean = true
 
-  public doughnutChartLabels: Label[] = [];
-  public doughnutChartData:MultiDataSet = [];
+  topThreeYears:number = 3
+  topThreeYearsArray:any = []
+  // console.log(this.topThreeYearsArray)
+
+  uniqueCountries = this.apiService.onUniqueCandWP()
+  uniqueWheelPos = this.apiService.onUniqueWP()
+
+  public doughnutChartLabels: Label[] = []
+  public doughnutChartData:MultiDataSet = []
   public doughnutChartType:ChartType = 'doughnut'
-  public elem:any;
-  public elem1:any;
+  public elem:any
+  public elem1:any
   public pieColors:string[] = []
   public staticYellow:string = "#e67e22"
 
-  public barChartLabels: Label[] = [];
+  public barChartLabels: Label[] = []
   public barChartType: ChartType = 'horizontalBar'
   public barChartLegend = false;
   public reasonsData:number[] = []
   public reasonsBarColors:string[] = []
 
-  constructor(private apiService: ApiService) {
-    this.onStartOfPage()
-  }
+  constructor(private apiService: ApiService) {}
 
   ngOnInit() {
+    this.onStartOfPage()
   }  
 
   onStartOfPage(){
-    console.log("Hey Start Page on")
+    console.log("------------------------------------Hey Start Page on--------------------------------")
+
+    // -----------------KPOI Most Entries----------------
+    this.apiService.onCountAndDates(this.topThreeYears).subscribe(res=>this.topThreeYearsArray=res)
+
+    // -----------------Bar Chart----------------
     this.apiService.onBarReasons().subscribe(
       (result)=>{
         this.pleaseWaitBlinkReasonChart = false
@@ -57,7 +69,6 @@ export class AdminDashboardComponent implements OnInit {
             // }))
             this.reasonsBarColors.push(this.staticYellow)
           }
-          // console.log(this.reasonsBarColors)
         })
       },
       (error)=>{
@@ -65,28 +76,29 @@ export class AdminDashboardComponent implements OnInit {
       }
     )
 
-
+    // -----------------Doughnut Chart----------------
     this.apiService.onDoughnutRimtype().subscribe(
       (result)=>{
-        console.log(result)
+        // console.log(result)
         this.pleaseWaitBlinkPieChart = false
         result.forEach(element => {
           element['rimtype'] !== null ? this.elem = element['rimtype'] : this.elem = "Unclassified"
           this.doughnutChartLabels.push(this.elem)
           this.doughnutChartData.push(element['number'])
           this.pieColors.push(randomColor({
-            hue: 'red',
+            hue: 'blue',
             luminosity: 'light',
             format: 'rgba',
-            alpha: 0.9
+            alpha: 1
           }))
-          console.log(this.elem)
+          // console.log(this.elem)
         });
       },
       (error)=>{
         console.log(error)
       }
     )
+
   }  
 
   // ---------------- line chart ----------------
@@ -168,7 +180,25 @@ export class AdminDashboardComponent implements OnInit {
   ];
 
   public doughnutChartOptions: any = {
+    legend: {
+      position: 'top',
+      // display: false,
+      labels: {
+        fontColor: '#000',
+      }
+    },
+    elements:{
+      line:{
+        tension: 0,
+        labels:{
+          fontColor:'#fff'
+        }
+      }
+    },
     pieceLabel: {
+      // labels: {
+      fontColor: '#000',
+      // },
       render: function (args) {
         const label = args.label,
               value = args.value;
@@ -179,12 +209,23 @@ export class AdminDashboardComponent implements OnInit {
  
   // ---------------- Bar Chart ----------------
   public barChartOptions: any = {
-    responsive: true,
+    responsive: true, 
+    scaleShowValues: true,
+    scaleValuePaddingX: 10,
+    scaleValuePaddingY: 10,
     // We use these empty structures as placeholders for dynamic theming.
     scales: { xAxes: [{
-      // stacked: true
+      display: true,
+          ticks: {
+            fontSize: 11,
+            fontColor:"#fff"
+          }
     }], yAxes: [{
-      // stacked: true
+      display: true,
+          ticks: {
+            fontSize: 11,
+            fontColor:"#fff"
+          }
     }] },
     legend: {
       position: 'bottom',
@@ -209,6 +250,13 @@ export class AdminDashboardComponent implements OnInit {
         anchor: 'end',
         align: 'end',
       }
+    },
+    pieceLabel: {
+      render: function (args) {
+        const label = args.label,
+              value = args.value;
+        return label + ': ' + value;
+      }
     }
   };
   public barChartData: ChartDataSets[] = [
@@ -219,8 +267,6 @@ export class AdminDashboardComponent implements OnInit {
       backgroundColor: this.reasonsBarColors
     }
   ];
-
-
   
 
   // events

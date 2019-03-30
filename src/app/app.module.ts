@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { BsDropdownModule, AlertModule, CollapseModule, ModalModule, TypeaheadModule, ProgressbarModule } from 'ngx-bootstrap';
+import { BsDropdownModule, AlertModule, CollapseModule, ModalModule, TypeaheadModule, ProgressbarModule, TooltipModule  } from 'ngx-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuard } from './shared/auth-guard.service';
@@ -52,6 +52,7 @@ import { UnauthComponent } from './unauth/unauth.component';
     ModalModule.forRoot(),
     TypeaheadModule.forRoot(),
     ProgressbarModule.forRoot(),
+    TooltipModule.forRoot(),
     ChartsModule,
     AppRoutingModule,
     BrowserAnimationsModule
