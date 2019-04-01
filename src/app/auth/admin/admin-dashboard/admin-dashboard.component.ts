@@ -20,6 +20,9 @@ export class AdminDashboardComponent implements OnInit {
   topThreeYearsArray:any = []
   // console.log(this.topThreeYearsArray)
 
+  topThreeReasons:number = 3;
+  topThreeReasonsArray:any = []
+
   uniqueCountries = this.apiService.onUniqueCandWP()
   uniqueWheelPos = this.apiService.onUniqueWP()
 
@@ -41,13 +44,19 @@ export class AdminDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.onStartOfPage()
-  }  
+  }
+
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
   onStartOfPage(){
     console.log("------------------------------------Hey Start Page on--------------------------------")
 
     // -----------------KPOI Most Entries----------------
     this.apiService.onCountAndDates(this.topThreeYears).subscribe(res=>this.topThreeYearsArray=res)
+
+    this.apiService.onFindingReasons(3).subscribe(res=>this.topThreeReasonsArray=res)
 
     // -----------------Bar Chart----------------
     this.apiService.onBarReasons().subscribe(

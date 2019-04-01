@@ -227,7 +227,6 @@ def onBarReasonsClick():
 def onCountAndDates():
     print ("-~-~-~-~-~-~-~ onCountAndDates -~-~-~-~-~-~-~-~")
     d = int(request.data)
-    print (type(d))
     total = []
     final = []
     collection = conection_ssdi_data_db()
@@ -248,11 +247,15 @@ def onCountAndDates():
             "year":i['_id']['year'],
             "count":i['count']
         })
-    for i in range(0, d):
-        final.append(total[i])
+    if(d<=len(total)):
+        for i in range(0, d):
+            final.append(total[i])
+        return dumps(final), 200
+    else:
+        return jsonify({'Found':False}), 404
     print(final)
     # return jsonify(dumps(c)), 200
-    return dumps(final), 200
+    
 
 # -------------------------------------------------
 #         get unique countries
@@ -286,6 +289,44 @@ def onUniqueWP():
     rims = cursor.dis
     return dumps(b), 200
 
+# -------------------------------------------------
+#                 get finding reasons counts
+# -------------------------------------------------
+@app.route('/onFindingReasons', methods=["POST"])
+def onFindingReasons():
+    print ("-~-~-~-~-~-~-~ onFindingReasons -~-~-~-~-~-~-~-~")
+    d = int(request.data)
+    total = []
+    final = []
+    collection = conection_ssdi_data_db()
+    cursor = collection.tread_depth
+    pipeline = [
+        {"$group" : 
+            {
+                "_id" : { "finding": "$finding" },           
+                "count": { "$sum": 1 }
+            }
+        },
+        {"$sort": SON([("count", -1)]) }
+    ]
+    rims = cursor.aggregate(pipeline)
+    for i in rims:
+        total.append({
+            "finding":i['_id']['finding'],
+            "count":i['count']
+        })
+        # print(i)
+    if(d<=len(total)):
+        for i in range(0, d):
+            final.append(total[i])
+        return dumps(final), 200
+    else:
+        return jsonify({'Found':False}), 404
+    print(final)
+    print(total)
+    # return dumps(total), 200
+
+# onFindingReasons()
 
 
 if __name__ == '__main__':

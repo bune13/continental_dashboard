@@ -49,11 +49,11 @@
 }
 
 .textKPOI {
-  font-size: 200%;  
+  font-size: 150%;  
 }
 
 .topYears {
-  background: -webkit-linear-gradient(rgba(24, 90, 157, 1), rgba(67, 206, 162, 1));
+  background: -webkit-linear-gradient(rgba(67, 206, 162, 1), rgba(24, 90, 157, 1));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   cursor: pointer;
@@ -63,6 +63,14 @@
   background: -webkit-linear-gradient(rgba(0, 198, 255, 1), rgba(0, 114, 255, 1));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.topFindings {
+  /* font-size: 100%; */
+  background: -webkit-linear-gradient(rgba(157, 80, 187, 1), rgba(168, 50, 121, 1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
 }
 
 .donut-chart-right-upper {

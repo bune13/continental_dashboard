@@ -120,17 +120,8 @@ export class ApiService{
   //  --------------------------------------------
   //               onCountAndDates
   //  --------------------------------------------
-  
   onCountAndDates(value){
     return this.httpClient.post<any[]>(`${this.api_url}onCountAndDates`,value, httpOptions)
-    // .subscribe(
-    //   (result)=>{
-    //     console.log(result)
-    //   },
-    //   (error)=>{
-    //     console.log(error)
-    //   }
-    // )
   }
 
   //  --------------------------------------------
@@ -145,6 +136,13 @@ export class ApiService{
   //  --------------------------------------------
   onUniqueWP(){
     return this.httpClient.get<any[]>(`${this.api_url}onUniqueWP`, httpOptions)
+  }
+
+  //  --------------------------------------------
+  //               onFindingReasons
+  //  --------------------------------------------
+  onFindingReasons(value){
+    return this.httpClient.post<any[]>(`${this.api_url}onFindingReasons`,value, httpOptions)
   }
 
 

@@ -35,7 +35,7 @@
               <div class="col-12">
                 <div class="row">
 
-                  <div class="col-3">
+                  <div class="col-md-3 col-sm-6 col-12">
                     <div class="on-box left-upper-showcase text-center">
 
                       <div class="upper-label-kpoi">
@@ -54,7 +54,7 @@
                             tooltip="{{i['count']}}">{{ i["year"] }}{{isLast ? '' : ', '}}</span>
                         </span>
                         <br>
-                        <small>(Hover over to see the counts.)</small>
+                        <small><i>(Hover over to see the counts.)</i></small>
 
                       </div>
                       <!-- <div class="col-lg-4 col-sm-6 col-12 my-3" *ngFor="let film of filmData"> -->
@@ -63,16 +63,17 @@
                     </div>
                   </div>
 
-                  <div class="col-3">
+                  <div class="col-md-3 col-sm-6 col-12">
                     <div class="on-box left-upper-showcase text-center">
 
                       <div class="upper-label-kpoi">
                         Unique Values
                       </div>
                       <div class="lable-logo mt-1">
-                        <i class="fa fa-rocket lable-logo-fa p-3 m-2 label-2-fa"></i>
+                        <!-- <i class="fa fa-rocket lable-logo-fa p-3 m-2 label-2-fa"></i> -->
+                        <i class="fa fa-hand-o-up lable-logo-fa p-3 m-2 label-2-fa"></i>
                       </div>
-                      <div class="second-lable-data">
+                      <div class="second-lable-data mt-3">
                         Number of distinct countries: <span
                           class="uniqueCandWP textKPOI">{{ uniqueCountries | async }}</span>.
                         <br>
@@ -83,27 +84,37 @@
                     </div>
                   </div>
 
-                  <div class="col-3">
+                  <div class="col-md-3 col-sm-6 col-12">
                     <div class="on-box left-upper-showcase text-center">
 
                       <div class="upper-label-kpoi">
-                        Unique Values
+                        Top {{ topThreeReasons }} findings with most counts
                       </div>
                       <div class="lable-logo mt-1">
-                        <i class="fa fa-rocket lable-logo-fa p-3 m-2 label-3-fa"></i>
+                        <i class="fa fa-signing lable-logo-fa p-3 m-2 label-3-fa"></i>
+                      </div>
+                      <div class="second-lable-data py-3">
+                        <span *ngFor="let i of topThreeReasonsArray; let isLast=last">
+                          <span class="topFindings textKPOI"
+                            tooltip="{{i['count']}}">{{ capitalizeFirstLetter(i["finding"]) }}{{isLast ? '' : ', '}}
+                          </span>
+                        </span>
+                        <br>
+                        <small><i>(Hover over to see the counts.)</i></small>
+
                       </div>
 
                     </div>
                   </div>
 
-                  <div class="col-3">
+                  <div class="col-md-3 col-sm-6 col-12">
                     <div class="on-box left-upper-showcase text-center">
 
                       <div class="upper-label-kpoi">
                         Unique Values
                       </div>
                       <div class="lable-logo mt-1">
-                        <i class="fa fa-rocket lable-logo-fa p-3 m-2 label-4-fa"></i>
+                        <i class="fa fa-send-o lable-logo-fa p-3 m-2 label-4-fa"></i>
                       </div>
 
                     </div>
