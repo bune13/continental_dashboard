@@ -5,7 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuard } from './shared/auth-guard.service';
 import { ChartsModule } from 'ng2-charts';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 // import { ApiService } from './shared/api.service';
 
 import { AppComponent } from './app.component';
@@ -55,7 +56,8 @@ import { UnauthComponent } from './unauth/unauth.component';
     TooltipModule.forRoot(),
     ChartsModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxChartsModule
   ],
   providers: [
     AuthGuard,

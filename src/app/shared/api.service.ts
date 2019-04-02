@@ -145,5 +145,19 @@ export class ApiService{
     return this.httpClient.post<any[]>(`${this.api_url}onFindingReasons`,value, httpOptions)
   }
 
+  //  --------------------------------------------
+  //               onCountries
+  //  --------------------------------------------
+  getCountries(){
+    return this.httpClient.get<any[]>(`${this.api_url}onCountries`, httpOptions)
+  }
+
+  //  --------------------------------------------
+  //               onRimtypePerCountries
+  //  --------------------------------------------
+  onRimtypePerCountries(value){
+    return this.httpClient.post<any[]>(`${this.api_url}onRimtypePerCountries`,value, httpOptions)
+  }
+
 
 }

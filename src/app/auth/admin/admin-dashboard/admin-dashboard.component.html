@@ -24,7 +24,7 @@
           <!-- ------------Start Analytics Container Field------------ -->
 
           <!-- ------------Center left major space------------ -->
-          <div class="col-12 px-4 py-4">
+          <div class="col-12 my-2">
             <!-- ------------User Trending------------ -->
             <div class="row">
 
@@ -126,9 +126,8 @@
             </div>
           </div>
 
-
-          <!-- ------------handle left minor space------------ -->
-          <div class="col-12 col-lg-8">
+          <!-- ------------handle left minor reason bar chart space------------ -->
+          <div class="col-12 col-lg-8 my-2">
 
             <!-- ------------Chart For Reasons------------ -->
             <div class="row">
@@ -142,7 +141,7 @@
                   <div class="col-12 text-center">
                     <span class="admin-analytics-titles">Reasons</span>
                   </div>
-                  <div class="col-12 text-center">
+                  <div class="col-12 text-center mb-4">
                     <small>Tire Wear Issues</small>
                   </div>
 
@@ -158,8 +157,8 @@
             </div>
           </div>
 
-          <!-- ------------handle right minor space------------ -->
-          <div class="col-12 col-lg-4">
+          <!-- ------------handle right minor rimtype doughnut space------------ -->
+          <div class="col-12 col-lg-4 my-2">
             <!-- ------------Pie Chart for Rimtype------------ -->
             <div class="row">
               <div class="col-12 mb-3">
@@ -177,6 +176,29 @@
                 </div>
               </div>
             </div>
+
+          </div>
+
+          <!-- ------------handle right minor rimtype doughnut space------------ -->
+          <div class="col-12 my-2">
+
+            <div class="selectCountryForRimtype p-3">
+              <form [formGroup]="countryForm">
+                <div class="form-group">
+                  <label for="country">Select a country:</label>
+                  <select class="form-control" formControlName="countryControl"
+                    (change)="onChangeCountrySelect($event)">
+                    <option [value]="country" *ngFor="let country of countries"> {{country}} </option>
+                  </select>
+                </div>
+              </form>
+            </div>
+
+            <div class="countryPieGrid">
+              <ngx-charts-pie-grid [scheme]="colorScheme" [animations]="true" [results]="countriesResult">
+              </ngx-charts-pie-grid>
+            </div>
+
 
           </div>
 

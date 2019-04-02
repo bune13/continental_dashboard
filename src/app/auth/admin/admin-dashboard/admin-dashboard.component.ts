@@ -6,6 +6,7 @@ import 'chart.piecelabel.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { Label, Color, BaseChartDirective, MultiDataSet } from 'ng2-charts';
 import { Observable } from 'rxjs';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -40,23 +41,47 @@ export class AdminDashboardComponent implements OnInit {
   public reasonsData:number[] = []
   public reasonsBarColors:string[] = []
 
+  countryForm:FormGroup;
+  countries:string[] = []
+  colorScheme = "flame";
+  countriesResult:object[] = []
+  selectACountry:boolean = true
+
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
     this.onStartOfPage()
+    this.countryForm = new FormGroup({
+      'countryControl': new FormControl(null)
+    })
   }
 
   capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  onChangeCountrySelect($event){
+    this.selectACountry = false
+    this.apiService.onRimtypePerCountries(this.countryForm.value.countryControl).subscribe(
+      (res)=>{
+        this.countriesResult = res
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+  }
+
   onStartOfPage(){
     console.log("------------------------------------Hey Start Page on--------------------------------")
+
+    
 
     // -----------------KPOI Most Entries----------------
     this.apiService.onCountAndDates(this.topThreeYears).subscribe(res=>this.topThreeYearsArray=res)
 
-    this.apiService.onFindingReasons(3).subscribe(res=>this.topThreeReasonsArray=res)
+    // -----------------KPOI Most Reasons----------------
+    this.apiService.onFindingReasons(this.topThreeReasons).subscribe(res=>this.topThreeReasonsArray=res)
 
     // -----------------Bar Chart----------------
     this.apiService.onBarReasons().subscribe(
@@ -107,6 +132,11 @@ export class AdminDashboardComponent implements OnInit {
         console.log(error)
       }
     )
+
+    // -----------------get Countries----------------
+    this.apiService.getCountries().subscribe(res=>this.countries=res)
+
+
 
   }  
 

@@ -91,11 +91,11 @@ def register():
         msg = Message('Welcome', sender = 'test.dash@yahoo.com', recipients = [d['email']])
         print (d)
         
-        confirm_url = "http://localhost:4200/"+str(UUID_STRIN)
-        msg.html=render_template('confirm.html', confirm_url=confirm_url)
-        msg.body = html
-        print(msg,type(msg.body))
-        mail.send(msg)
+        # confirm_url = "http://localhost:4200/"+str(UUID_STRIN)
+        # msg.html=render_template('confirm.html', confirm_url=confirm_url)
+        # msg.body = html
+        # print(msg,type(msg.body))
+        # mail.send(msg)
 
         return jsonify({'success':True}), 200
     else:
@@ -270,7 +270,6 @@ def onUniqueCandWP():
     a = 0
     for i in rims:        
         a += 1
-    rims = cursor.dis
     return dumps(a), 200
 
 # -------------------------------------------------
@@ -284,9 +283,8 @@ def onUniqueWP():
     
     rims1 = cursor.distinct("wheelposition")
     b = 0
-    for i in rims1:        
+    for i in rims1:
         b += 1
-    rims = cursor.dis
     return dumps(b), 200
 
 # -------------------------------------------------
@@ -322,11 +320,67 @@ def onFindingReasons():
         return dumps(final), 200
     else:
         return jsonify({'Found':False}), 404
-    print(final)
-    print(total)
+    # print(final)
+    # print(total)
     # return dumps(total), 200
 
-# onFindingReasons()
+# -------------------------------------------------
+#          get rimtype based on Countries
+# -------------------------------------------------
+@app.route('/onCountries', methods=["GET"])
+def onCountries():
+    print ("-~-~-~-~-~-~-~ onCountries -~-~-~-~-~-~-~-~")
+    collection = conection_ssdi_data_db()
+    cursor = collection.tread_depth
+    rims = cursor.distinct("tire.country_fk")
+    return dumps(rims), 200
+
+# -------------------------------------------------
+#          get rimtype based on Countries
+# -------------------------------------------------
+@app.route('/onRimtypePerCountries', methods=["POST"])
+def onRimtypePerCountries():
+    print ("-~-~-~-~-~-~-~ onRimtypePerCountries -~-~-~-~-~-~-~-~")
+    d = str(request.data, 'utf-8')
+    print(d)
+    total = []
+    collection = conection_ssdi_data_db()
+    cursor = collection.tread_depth
+    pipeline = [
+        {
+            "$match": {
+                "tire.country_fk": d
+            }
+        },
+        {
+        "$group": {
+                "_id": {
+                    "rimtype": "$rimtype"
+                },
+                "count": {
+                    "$sum": 1.0
+                }
+            }
+        },
+        # {"$sort": SON([("count", -1)]) }
+    ]
+    rims = cursor.aggregate(pipeline)
+    for i in rims:
+        total.append({
+            "name": i['_id']['rimtype'],
+            "value":int(i['count'])
+        })
+        print(i)
+    # if(d<=len(total)):
+    #     for i in range(0, d):
+    #         final.append(total[i])
+    #     return dumps(final), 200
+    # else:
+    #     return jsonify({'Found':False}), 404
+    # print(final)
+    print(total)
+    return dumps(total), 200
+
 
 
 if __name__ == '__main__':
