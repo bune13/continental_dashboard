@@ -193,8 +193,10 @@
                 </div>
               </form>
             </div>
-
-            <div class="countryPieGrid">
+            <div class=" donut-chart-right-upper-wait-drop" *ngIf="selectACountry">
+              <div class="blink_me">Please Select a Country...</div>
+            </div>
+            <div class="countryPieGrid" *ngIf="!selectACountry">
               <ngx-charts-pie-grid [scheme]="colorScheme" [animations]="true" [results]="countriesResult">
               </ngx-charts-pie-grid>
             </div>

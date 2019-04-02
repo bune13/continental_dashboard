@@ -43,7 +43,7 @@ export class AdminDashboardComponent implements OnInit {
 
   countryForm:FormGroup;
   countries:string[] = []
-  colorScheme = "flame";
+  colorScheme = "neons";
   countriesResult:object[] = []
   selectACountry:boolean = true
 
@@ -87,7 +87,6 @@ export class AdminDashboardComponent implements OnInit {
     this.apiService.onBarReasons().subscribe(
       (result)=>{
         this.pleaseWaitBlinkReasonChart = false
-        console.log(result)
                
         result.forEach(element => {
           // element['reason'] !== null ? this.elem1 = element['reason'] : this.elem1 = "Unclassified"
