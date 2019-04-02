@@ -46,6 +46,7 @@ export class AdminDashboardComponent implements OnInit {
   colorScheme = "neons";
   countriesResult:object[] = []
   selectACountry:boolean = true
+  totalOfCountries:number = 0
 
   constructor(private apiService: ApiService) {}
 
@@ -65,6 +66,11 @@ export class AdminDashboardComponent implements OnInit {
     this.apiService.onRimtypePerCountries(this.countryForm.value.countryControl).subscribe(
       (res)=>{
         this.countriesResult = res
+        let total = 0
+        res.forEach(function (i){
+          total += i["value"]
+        })
+        this.totalOfCountries = total
       },
       (error)=>{
         console.log(error)

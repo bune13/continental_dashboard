@@ -103,7 +103,17 @@
 .countryPieGrid {
   background: linear-gradient(rgba(240, 240, 240, 0.7), rgba(240, 240, 240, 0.7));
   width: 100%;
-  min-height: 300px;
+  min-height: 310px;
+  border-right: 1px solid #212121;
+  border-left: 1px solid #212121;
+  border-bottom: 1px solid #212121;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.countryPieGridLabel {
+  background: linear-gradient(rgba(240, 240, 240, 1), rgba(63, 108, 134, 0.3));
+  border-right: 1px solid #212121;
+  border-left: 1px solid #212121;
 }
 
 .blink_me {
