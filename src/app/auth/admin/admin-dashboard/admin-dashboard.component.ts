@@ -7,6 +7,7 @@ import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { Label, Color, BaseChartDirective, MultiDataSet } from 'ng2-charts';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -48,7 +49,9 @@ export class AdminDashboardComponent implements OnInit {
   selectACountry:boolean = true
   totalOfCountries:number = 0
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private titleService:Title) {
+    this.titleService.setTitle("Dashboard")
+  }
 
   ngOnInit() {
     this.onStartOfPage()

@@ -197,7 +197,7 @@
               <div class="blink_me">Please Select a Country...</div>
             </div>
             <div class="countryPieGridLabel d-flex justify-content-center p-2" *ngIf="!selectACountry">
-              Total count: {{ totalOfCountries }}
+              Total number of tires: {{ totalOfCountries }}
             </div>
             <div class="countryPieGrid" *ngIf="!selectACountry">
               <ngx-charts-pie-grid [scheme]="colorScheme" [animations]="true" [results]="countriesResult"

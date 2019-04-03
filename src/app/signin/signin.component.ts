@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-signin',
@@ -21,7 +22,9 @@ export class SigninComponent implements OnInit {
   
  
 
-  constructor(private apiService:ApiService, private router:Router) { }
+  constructor(private apiService:ApiService, private router:Router, private titleService:Title) {
+    this.titleService.setTitle("Sign In - Continental Tires")
+  }
 
   onLogin(){
     if(this.signInForm.valid){
